@@ -7,13 +7,15 @@ Docker container which has python 2.7.12 and OpenCV 3.1
 You can get this image from GitHub:
 
 ```bash
-git clone ...
+git clone https://github.com/igomezal/docker-python-opencv.git
 ```
-or Docker Hub
+
+or Docker Hub:
 
 ```bash
-docker pull ...
+docker pull igomezal/docker-python-opencv
 ```
+
 
 ### How to use it?
 To build it:
@@ -38,21 +40,24 @@ This will run the python script but with OpenCV you normally want to display the
 
 1. Open up your X server:
 
-```bash
-xhost +local:docker
-```
+    ```bash
+    xhost +local:docker
+    ```
 
 2. Use this command line:
 
-```bash
-docker run -it --rm --name the_name -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v /python_script_dir:/a_dir -w /a_dir python-opencv31 python script.py
-```
+    ```bash
+    docker run -it --rm --name the_name -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v /python_script_dir:/a_dir -w /a_dir python-opencv31 python script.py
+    ```
 
 3. And when you are finished using the container (for security):
 
-```bash
-xhost -local:docker
-```
+    ```bash
+    xhost -local:docker
+    ```
+
+Note that if you use the command `docker pull igomezal/docker-python-opencv` the name of your image will be *igomezal/docker-python-opencv* instead of *python-opencv31* 
+
 
 ### Bash function:
 
