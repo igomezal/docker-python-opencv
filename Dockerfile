@@ -9,7 +9,6 @@ RUN apt-get update && \
     pkg-config \
     tk-dev \
     python-tk \
-    python3-tk \
     libjpeg62-turbo-dev \
     libtiff5-dev \
     libjasper-dev \
@@ -20,18 +19,18 @@ RUN apt-get update && \
     libswscale-dev \
     libv4l-dev \
     libatlas-base-dev \
-    gfortran
+    gfortran \
+    && apt-get clean
 
-RUN pip install numpy
-RUN pip install scipy
-RUN rm -rf ~/.cache/pip
+RUN pip install --no-cache-dir numpy scipy
 
 WORKDIR /
 
 RUN git clone https://github.com/matplotlib/matplotlib.git \
     && cd matplotlib \
     && python setup.py install \
-    && cd ..
+    && cd .. \
+    && rm -rf matplotlib
 
 RUN git clone https://github.com/Itseez/opencv.git \
     && cd opencv \
@@ -46,14 +45,13 @@ RUN git clone https://github.com/Itseez/opencv.git \
     && cmake -D CMAKE_BUILD_TYPE=RELEASE \
         -D CMAKE_INSTALL_PREFIX=$(python -c "import sys; print(sys.prefix)") \
         -D INSTALL_C_EXAMPLES=OFF \
-        -D INSTALL_PYTHON_EXAMPLES=ON \
+        -D INSTALL_PYTHON_EXAMPLES=OFF \
         -D OPENCV_EXTRA_MODULES_PATH=/opencv_contrib/modules \
-        -D BUILD_EXAMPLES=ON .. \
+        -D BUILD_EXAMPLES=OFF .. \
     && make \
     && make install \
-    && ldconfig 
-
-RUN cd / 
-RUN rm -rf opencv
-RUN rm -rf opencv_contrib
-RUN rm -rf matplotlib
+    && ldconfig \
+    && make clean \
+    && cd / \
+    && rm -rf opencv \
+    && rm -rf opencv_contrib

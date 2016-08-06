@@ -65,11 +65,11 @@ You can even create a bash function to use the container and add it to your .bas
 
 ```bash
 function opencv(){
-        xhost +local:docker
+    xhost +local:docker
 	if [ $#  -gt 0 ]; then
-		sudo docker run -it --rm --name opencv -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $PWD:$PWD -w $PWD python-opencv31 python $1
+		docker run -it --rm --name opencv -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $PWD:$PWD -w $PWD python-opencv31 python $1
 	else
-		sudo docker run -it --rm --name opencv python-opencv31
+		docker run -it --rm --name opencv python-opencv31
 	fi
 	xhost -local:docker
 }
